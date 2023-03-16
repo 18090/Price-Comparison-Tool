@@ -25,7 +25,27 @@ lb_subheading = tk.Label(
   text="Enter a store, a product, and a budget.",
   fg="black",
   bg="#F7DC6F")
+# Labels for product, store and budget
+lb_date = tk.Label(window,
+                   text="Product: ",
+                   font=('Arial', 12, "bold"),
+                   fg="black",
+                   bg="#F7DC6F")
+lb_month = tk.Label(window,
+                    text="Store : ",
+                    font=('Arial', 12, "bold"),
+                    fg="black",
+                    bg="#F7DC6F")
+lb_year = tk.Label(window,
+                   text="Budget: ",
+                   font=('Arial', 12, "bold"),
+                   fg="black",
+                   bg="#F7DC6F")
+
 
 # Placing the elements on the screen
 lb_heading.place(x=200, y=5)
 lb_subheading.place(x=250, y=40)
+lb_date.place(x=20, y=80)
+lb_month.place(x=20, y=105)
+lb_year.place(x=20, y=130)
