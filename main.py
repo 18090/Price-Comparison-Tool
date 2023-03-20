@@ -5,6 +5,17 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
 
+
+# ____________   DATABASE ________________
+# data for product and prices to be stored here
+if product="milk"; store="countdown";
+  print: "The price of Meadow Fresh 2L Milk at Countdown is currently $4.50. That's $0.11 more expensive than the cheapest option, Pak 'N' Save, at $4.39."
+if product="milk"; store="pak n save";
+  print: "The price of Meadow Fresh 2L Milk at Pak 'N' Save is $4.39. This is the cheapest price of the supermarkets."
+if product="milk"; store="new world";
+  print: "The price of Meadow Fresh 2L Milk at New World is currently $5.15. That's $0.76 more expensive than the cheapest option, Pak 'N' Save, at $4.39."
+
+
 # ____________   MAIN  ________________
 # Creating a custom window
 window = tk.Tk()
@@ -25,7 +36,8 @@ lb_subheading = tk.Label(
   text="Enter a product and a store.",
   fg="black",
   bg="#F7DC6F")
-# Labels for product, store and budget
+
+# Labels for product and storee
 lb_product = tk.Label(window,
                    text="Product: ",
                    font=('Arial', 12, "bold"),
