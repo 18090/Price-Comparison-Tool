@@ -8,11 +8,11 @@ from tkinter import ttk
 
 # ____________   DATABASE ________________
 # data for product and prices to be stored here
-if product="milk"; store="countdown";
+if product:="milk"; store:="countdown";
   print: "The price of Meadow Fresh 2L Milk at Countdown is currently $4.50. That's $0.11 more expensive than the cheapest option, Pak 'N' Save, at $4.39."
-if product="milk"; store="pak n save";
+if product:="milk"; store:="pak n save";
   print: "The price of Meadow Fresh 2L Milk at Pak 'N' Save is $4.39. This is the cheapest price of the supermarkets."
-if product="milk"; store="new world";
+if product:="milk"; store:="new world";
   print: "The price of Meadow Fresh 2L Milk at New World is currently $5.15. That's $0.76 more expensive than the cheapest option, Pak 'N' Save, at $4.39."
 
 
@@ -37,7 +37,7 @@ lb_subheading = tk.Label(
   fg="black",
   bg="#F7DC6F")
 
-# Labels for product and storee
+# Labels for product and store
 lb_product = tk.Label(window,
                    text="Product: ",
                    font=('Arial', 12, "bold"),
@@ -48,6 +48,16 @@ lb_store = tk.Label(window,
                     font=('Arial', 12, "bold"),
                     fg="black",
                     bg="#F7DC6F")
+
+# Entry boxes for product and store
+e_product = tk.Entry(window, width=5)
+e_store = tk.Entry(window, width=5)
+
+# Button to calculate age
+btn_price = tk.Button(window,
+                              text="See the best price!",
+                              font=("Arial", 13),
+                              command=validation)
 
 # Placing the elements on the screen
 lb_heading.place(x=200, y=5)
