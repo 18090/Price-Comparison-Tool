@@ -5,16 +5,64 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
 
+# ____________   FUNCTIONS ________________
+
+def compare_prices(store, product):
+  # compare the prices of the given store and product
+  price_difference = store.price - product.price
+  return price_difference
+
+
+def display_calc_price_difference(price_difference):
+  tbox_price_difference.config(state='normal')
+
+  #price difference calculated is inserted into the text box after clearing the previous info in the textbox.
+  tbox_price_difference.delete('1.0', tk.END)
+  tbox_price_difference.insert(tk.END, price_difference)
+  tbox_price_difference.config(state='disabled')
+
+
+def validation():
+  # gets the two entries
+  store = e_store.get()
+  product = e_product.get()
+  msg = ''
+
+  if len(store) == 0 or len(product) == 0:
+    msg = 'store and product can\'t be empty'
+  else:
+    try:
+      # msg = 'Success!'
+      store_name = store
+      product_name = product
+      calc_price_difference = compare_prices(store_name, product_name)
+      display_calc_price_difference(calc_price_difference)
+
+    except Exception as ep:
+      messagebox.showerror('error', ep)
+
+  if msg != '':
+    messagebox.showinfo('message', msg)
+
+
+def exit():
+  window.destroy()
 
 # ____________   DATABASE ________________
 # data for product and prices to be stored here
-if product:="milk"; store:="countdown";
-  print: "The price of Meadow Fresh 2L Milk at Countdown is currently $4.50. That's $0.11 more expensive than the cheapest option, Pak 'N' Save, at $4.39."
-if product:="milk"; store:="pak n save";
-  print: "The price of Meadow Fresh 2L Milk at Pak 'N' Save is $4.39. This is the cheapest price of the supermarkets."
-if product:="milk"; store:="new world";
-  print: "The price of Meadow Fresh 2L Milk at New World is currently $5.15. That's $0.76 more expensive than the cheapest option, Pak 'N' Save, at $4.39."
-
+if product == "milk" && store == "countdown":
+  print("The price of Meadow Fresh 2L Milk at Countdown is currently $4.50. That's $0.11 more expensive than the cheapest option, Pak 'N' Save, at $4.39.")
+if product == "milk" && store == "pak n save":
+  print("The price of Meadow Fresh 2L Milk at Pak 'N' Save is $4.39. This is the cheapest price of the supermarkets avaliable.")
+if product == "milk" && store == "new world":
+  print("The price of Meadow Fresh 2L Milk at New World is currently $5.15. That's $0.76 more expensive than the cheapest option, Pak 'N' Save, at $4.39.")
+if product == "bread" && store == "countdown":
+  print("The price of Tip Top White Toast Bread at Countdown is currently $3.99. That's $0.12 more expensive than the cheapest option, Pak 'N' Save, at $3.87.")
+if product == "bread" && store == "pak n save":
+  print("The price of Tip Top White Toast Bread at Pak 'N' Save is currently $3.87. This is the cheapest price of the supermarkets avaliable.")
+if product == "bread" && store == "new world":
+  print("The price of Tip Top White Toast Bread at New World is currently $4.19. That's $0.32 more expensive than the cheapest option, Pak 'N' Save, at $3.87.")
+  
 
 # ____________   MAIN  ________________
 # Creating a custom window
