@@ -48,20 +48,23 @@ def validation():
 def exit():
   window.destroy()
 
-# ____________   DATABASE ________________
+
+# _____________ UPDATED DATABASE ________________
 # data for product and prices to be stored here
-if product == "milk" && store == "countdown":
-  print("The price of Meadow Fresh 2L Milk at Countdown is currently $4.50. That's $0.11 more expensive than the cheapest option, Pak 'N' Save, at $4.39.")
-if product == "milk" && store == "pak n save":
-  print("The price of Meadow Fresh 2L Milk at Pak 'N' Save is $4.39. This is the cheapest price of the supermarkets avaliable.")
-if product == "milk" && store == "new world":
-  print("The price of Meadow Fresh 2L Milk at New World is currently $5.15. That's $0.76 more expensive than the cheapest option, Pak 'N' Save, at $4.39.")
-if product == "bread" && store == "countdown":
-  print("The price of Tip Top White Toast Bread at Countdown is currently $3.99. That's $0.12 more expensive than the cheapest option, Pak 'N' Save, at $3.87.")
-if product == "bread" && store == "pak n save":
-  print("The price of Tip Top White Toast Bread at Pak 'N' Save is currently $3.87. This is the cheapest price of the supermarkets avaliable.")
-if product == "bread" && store == "new world":
-  print("The price of Tip Top White Toast Bread at New World is currently $4.19. That's $0.32 more expensive than the cheapest option, Pak 'N' Save, at $3.87.")
+if product == "milk":
+  if store == "countdown":
+    print("The price of Meadow Fresh 2L Milk at Countdown is currently $4.50. That's $0.11 more expensive than the cheapest option, Pak 'N' Save, at $4.39.")
+  elif store == "pak n save":
+    print("The price of Meadow Fresh 2L Milk at Pak 'N' Save is $4.39. This is the cheapest price of the supermarkets avaliable.")
+  elif store == "new world":
+    print("The price of Meadow Fresh 2L Milk at New World is currently $5.15. That's $0.76 more expensive than the cheapest option, Pak 'N' Save, at $4.39.")
+elif product == "bread":
+  if store == "countdown":
+    print("The price of Tip Top White Toast Bread at Countdown is currently $3.99. That's $0.12 more expensive than the cheapest option, Pak 'N' Save, at $3.87.")
+  elif store == "pak n save":
+    print("The price of Tip Top White Toast Bread at Pak 'N' Save is currently $3.87. This is the cheapest price of the supermarkets avaliable.")
+  elif store == "new world":
+    print("The price of Tip Top White Toast Bread at New World is currently $4.19. That's $0.32 more expensive than the cheapest option, Pak 'N' Save, at $3.87.")
   
 
 # ____________   MAIN  ________________
