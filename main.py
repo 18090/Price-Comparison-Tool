@@ -1,6 +1,6 @@
 #Price Comparison Tool
 # ____________   IMPORTS ________________
-# used to create a custom window for age calculator
+# used to create a custom window for price comparison tool
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
@@ -11,6 +11,15 @@ def compare_prices(store, product):
   # compare the prices of the given store and product
   price_difference = store[product] - min(store.values())
   return price_difference
+
+def add_item_to_database():
+    item = e_item.get()
+    price = float(e_price.get())
+    # Add code here to add the item and price to your database
+    # For example, you could use a dictionary:
+    prices[item] = price
+    # Display a message to confirm that the item has been added to the database
+    messagebox.showinfo('message', f"{item} added to database with price ${price:.2f}")
 
 
 def display_calc_price_difference(price_difference):
@@ -33,7 +42,9 @@ def validation():
   else:
     try:
       # msg = 'Success!'
-      store_name = prices[product]
+      store_name = prices.get(product)
+      if store_name is None:
+        raise KeyError('Product not found in database')
       calc_price_difference = compare_prices(store_name, store)
       display_calc_price_difference(calc_price_difference)
 
@@ -49,31 +60,25 @@ def validation():
 def exit():
   window.quit()
 
-
+# ____________   DATABASE ________________
 # create a dictionary to store product and price information
- if product == "milk":
-    if store == "countdown":
-        return ("The price of Meadow Fresh 2L Milk at Countdown is currently $4.50. That's $0.11 more expensive than the cheapest option, Pak 'N' Save, at $4.39.")
-    elif store == "pak n save":
-        return ("The price of Meadow Fresh 2L Milk at Pak 'N' Save is $4.39. This is the cheapest price of the supermarkets available.")
-    elif store == "new world":
-        return ("The price of Meadow Fresh 2L Milk at New World is currently $5.15. That's $0.76 more expensive than the cheapest option, Pak 'N' Save, at $4.39.")
-elif product == "bread":
-    if store == "countdown":
-        return ("The price of Tip Top White Toast Bread at Countdown is currently $3.99. That's $0.12 more expensive than the cheapest option, Pak 'N' Save, at $3.87.")
-    elif store == "pak n save":
-        return ("The price of Tip Top White Toast Bread at Pak 'N' Save is currently $3.87. This is the cheapest price of the supermarkets available.")
-    elif store == "new world":
-        return ("The price of Tip Top White Toast Bread at New World is currently $4.19. That's $0.32 more expensive than the cheapest option, Pak 'N' Save, at $3.87.")
-elif product == "apples":
-    if store == "countdown":
-        return ("The price of Jazz Apples at Countdown is currently $7.99/kg. That's $0.80 cheaper than the most expensive option, New World, at $8.79/kg.")
-    elif store == "pak n save":
-        return ("The price of Jazz Apples at Pak 'N' Save is $8.29/kg. That's $0.50 more expensive than the cheapest option, Countdown, at $7.99/kg.")
-    elif store == "new world":
-        return ("The price of Jazz Apples at New World is currently $8.79/kg. That's $0.80 more expensive than the cheapest option, Countdown, at $7.99/kg.")
-    else:
-        return ("Please enter a valid product.")
+prices = {
+    "milk": {
+        "countdown": 4.50,
+        "pak n save": 4.39,
+        "new world": 5.15
+    },
+    "bread": {
+        "countdown": 3.99,
+        "pak n save": 3.87,
+        "new world": 4.19
+    },
+    "apples": {
+        "countdown": 7.99,
+        "pak n save": 8.29,
+        "new world": 8.79
+    }
+}
 
 # ____________   MAIN  ________________
 # Creating a custom window
@@ -94,13 +99,23 @@ lb_heading = tk.Label(window,
 lb_heading.pack(pady=20)
 
 # Labels for store and product entry fields
-
 lb_store = tk.Label(window,
-                    text="Enter store name (e.g. Countdown):",
+                    text="Select store name:",
                     font=("Comic Sans", 14),
                     fg="black",
                     bg="#a7f2cd")
-e_store = tk.Entry(window, font=("Comic Sans", 14))
+
+store_options = ["Countdown", "New World", "Pak N Save"]
+selected_store = tk.StringVar()
+selected_store.set(store_options[0])
+
+e_store = tk.OptionMenu(window, selected_store, *store_options)
+e_store.config(font=("Comic Sans", 14))
+e_item = tk.Entry(window, font=("Comic Sans", 14))
+e_price = tk.Entry(window, font=("Comic Sans", 14))
+e_item.pack(pady=5)
+e_price.pack(pady=5)
+
 
 lb_product = tk.Label(window,
                       text="Enter product name (e.g. Milk):",
@@ -123,8 +138,9 @@ btn_compare = tk.Button(window,
                         font=("Comic Sans", 14),
                         bg="#58D68D",
                         fg="white",
-                        command=validation)
+                        command=add_item_to_database)
 btn_compare.pack(pady=10)
+
 
 # Text box to display the price difference
 tbox_price_difference = tk.Text(window,
