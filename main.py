@@ -3,7 +3,6 @@
 # used to create a custom window for price comparison tool
 import tkinter as tk
 from tkinter import messagebox
-from tkinter import ttk
 
 # ____________   FUNCTIONS ________________
 
@@ -11,16 +10,6 @@ def compare_prices(store, product):
   # compare the prices of the given store and product
   price_difference = store[product] - min(store.values())
   return price_difference
-
-def add_item_to_database():
-    item = e_item.get()
-    price = float(e_price.get())
-    # Add code here to add the item and price to your database
-    # For example, you could use a dictionary:
-    prices[item] = price
-    # Display a message to confirm that the item has been added to the database
-    messagebox.showinfo('message', f"{item} added to database with price ${price:.2f}")
-
 
 def display_calc_price_difference(price_difference):
   tbox_price_difference.config(state='normal')
@@ -111,11 +100,6 @@ selected_store.set(store_options[0])
 
 e_store = tk.OptionMenu(window, selected_store, *store_options)
 e_store.config(font=("Comic Sans", 14))
-e_item = tk.Entry(window, font=("Comic Sans", 14))
-e_price = tk.Entry(window, font=("Comic Sans", 14))
-e_item.pack(pady=5)
-e_price.pack(pady=5)
-
 
 lb_product = tk.Label(window,
                       text="Enter product name (e.g. Milk):",
@@ -138,7 +122,7 @@ btn_compare = tk.Button(window,
                         font=("Comic Sans", 14),
                         bg="#58D68D",
                         fg="white",
-                        command=add_item_to_database)
+                       )
 btn_compare.pack(pady=10)
 
 
