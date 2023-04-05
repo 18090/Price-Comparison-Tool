@@ -36,24 +36,60 @@ def validation():
   price_str = e_price.get()
   msg = ''
 
-  if len(store) == 0 or len(product) == 0:
-    msg = 'store and product can\'t be empty'
+    # validate inputs
+  if not store or not product or not price_str:
+    msg = 'store, product, and price can\'t be empty'
   else:
     try:
-      # msg = 'Success!'
+      price = float(price_str)
+      if price <= 0:
+        raise ValueError('Price must be a positive number')
+
       store_name = prices.get(product)
       if store_name is None:
         raise KeyError('Product not found in database')
-      calc_price_difference = compare_prices(store_name, store)
+
+      store[product][store_name] = price  # update the store dictionary with the new item
+      calc_price_difference = compare_prices(store_name, product)
       display_calc_price_difference(calc_price_difference)
 
-    except Exception as ep:
+    except (ValueError, KeyError) as ep:
       messagebox.showerror('error', ep)
       return
 
     msg = 'Prices compared successfully!'
 
   messagebox.showinfo('message', msg)
+
+def add_item():
+    # get user inputs for the new item
+    store = e_store.get().lower()
+    product = e_product.get().lower()
+    price_str = e_price.get()
+
+    # validate inputs
+    if not store or not product or not price_str:
+        messagebox.showerror("Error", "Please enter a store, product, and price.")
+        return
+    try:
+        price = float(price_str)
+    except ValueError:
+        messagebox.showerror("Error", "Price must be a number.")
+        return
+
+    # add the new item to the prices dictionary
+    if product in prices:
+        prices[product][store] = price
+    else:
+        prices[product] = {store: price}
+
+    # reset the input fields
+    e_store.setvar(selected_store, store_options[0])
+    e_product.delete(0, tk.END)
+    e_price.delete(0, tk.END)
+
+    # show success message
+    messagebox.showinfo("Success", f"Added {product} ({store}) for ${price:.2f}!")
 
 
 def exit():
