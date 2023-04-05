@@ -1,12 +1,3 @@
-'''
-  Name: 
-  James Hargest College
-  Programming Internal for 2.7 & 2.8 ~ 12 credits
-  Due: 6 April 2023
-  
-  TIP: Use assessment guide to help guide you through this Internal
-'''
-
 #Price Comparison Tool
 # ____________   IMPORTS ________________
 # used to create a custom window for price comparison tool
@@ -30,24 +21,30 @@ def display_calc_price_difference(price_difference):
 
 
 def validation():
-  # gets the two entries
+  # get user inputs for the new item
   store = e_store.get().lower()
   product = e_product.get().lower()
   price_str = e_price.get()
   msg = ''
 
-  if len(store) == 0 or len(product) == 0:
-    msg = 'store and product can\'t be empty'
+  # validate inputs
+  if not store or not product or not price_str:
+    msg = 'store, product, and price can\'t be empty'
   else:
     try:
-      # msg = 'Success!'
+      price = float(price_str)
+      if price <= 0:
+        raise ValueError('Price must be a positive number')
+
       store_name = prices.get(product)
       if store_name is None:
         raise KeyError('Product not found in database')
-      calc_price_difference = compare_prices(store_name, store)
+
+      store[product][store_name] = price  # update the store dictionary with the new item
+      calc_price_difference = compare_prices(store_name, product)
       display_calc_price_difference(calc_price_difference)
 
-    except Exception as ep:
+    except (ValueError, KeyError) as ep:
       messagebox.showerror('error', ep)
       return
 
@@ -55,35 +52,49 @@ def validation():
 
   messagebox.showinfo('message', msg)
 
+def add_item():
+    # get user inputs for the new item
+    store = e_store.get().lower()
+    product = e_product.get().lower()
+    price_str = e_price.get()
+
+    # validate inputs
+    if not store or not product or not price_str:
+        messagebox.showerror("Error", "Please enter a store, product, and price.")
+        return
+    try:
+        price = float(price_str)
+    except ValueError:
+        messagebox.showerror("Error", "Price must be a number.")
+        return
+
+    # add the new item to the prices dictionary
+    if product in prices:
+        prices[product][store] = price
+    else:
+        prices[product] = {store: price}
+
+    # reset the input fields
+    e_store.setvar(selected_store, store_options[0])
+    e_product.delete(0, tk.END)
+    e_price.delete(0, tk.END)
+
+    # show success message
+    messagebox.showinfo("Success", f"Added {product} ({store}) for ${price:.2f}!")
+
 
 def exit():
   window.quit()
 
 # ____________   DATABASE ________________
 # create a dictionary to store product and price information
-prices = {
-    "milk": {
-        "countdown": 4.50,
-        "pak n save": 4.39,
-        "new world": 5.15
-    },
-    "bread": {
-        "countdown": 3.99,
-        "pak n save": 3.87,
-        "new world": 4.19
-    },
-    "apples": {
-        "countdown": 7.99,
-        "pak n save": 8.29,
-        "new world": 8.79
-    }
-}
+prices = {}
 
 # ____________   MAIN  ________________
 # Creating a custom window
 window = tk.Tk()
 window.geometry("700x500")
-window.config(bg="#3ea8e6")
+window.config(bg="#a7f2cd")
 window.resizable(width=False, height=False)
 window.title('Compare Prices Now!')
 
@@ -97,12 +108,28 @@ lb_heading = tk.Label(window,
 # Pack the heading label
 lb_heading.pack(pady=20)
 
+lb_product = tk.Label(window,
+                      text="Enter product name (e.g. Milk):",
+                      font=("Comic Sans", 14),
+                      fg="black",
+                      bg="#a7f2cd")
+e_product = tk.Entry(window, font=("Comic Sans", 14))
+
+# Pack the store and product labels
+
+lb_product.pack(pady=10)
+
+# Pack the store and product entry fields
+#e_store.pack(pady=5)
+e_product.pack(pady=5)
+
 # Labels for store and product entry fields
 lb_store = tk.Label(window,
-                    text="Select store name:",
+                    text="Select a store:",
                     font=("Comic Sans", 14),
                     fg="black",
-                    bg="#F7DC6F")
+                    bg="#a7f2cd")
+lb_store.pack(pady=10)
 
 store_options = ["Countdown", "New World", "Pak N Save"]
 selected_store = tk.StringVar()
@@ -111,20 +138,27 @@ selected_store.set(store_options[0])
 e_store = tk.OptionMenu(window, selected_store, *store_options)
 e_store.config(font=("Comic Sans", 14))
 
-lb_product = tk.Label(window,
-                      text="Enter product name (e.g. Milk):",
-                      font=("Comic Sans", 14),
-                      fg="black",
-                      bg="#F7DC6F")
-e_product = tk.Entry(window, font=("Comic Sans", 14))
-
-# Pack the store and product labels
-lb_store.pack(pady=10)
-lb_product.pack(pady=10)
-
-# Pack the store and product entry fields
+# Pack the store label and dropdown
+lb_store.pack()
 e_store.pack(pady=5)
-e_product.pack(pady=5)
+
+# price
+lb_price = tk.Label(window,
+                    text="Enter price:",
+                    font=("Comic Sans", 14),
+                    fg="black",
+                    bg="#a7f2cd")
+e_price = tk.Entry(window, font=("Comic Sans", 14))
+lb_price.pack(pady=10)
+e_price.pack(pady=5)
+
+btn_add = tk.Button(window,
+                    text="Add Item",
+                    font=("Comic Sans", 14),
+                    bg="#5DADE2",
+                    fg="white",
+                    command=add_item)
+btn_add.pack(pady=10)
 
 # Button to compare prices
 btn_compare = tk.Button(window,
