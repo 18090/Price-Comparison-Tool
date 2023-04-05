@@ -97,23 +97,7 @@ def exit():
 
 # ____________   DATABASE ________________
 # create a dictionary to store product and price information
-prices = {
-    "milk": {
-        "countdown": 4.50,
-        "pak n save": 4.39,
-        "new world": 5.15
-    },
-    "bread": {
-        "countdown": 3.99,
-        "pak n save": 3.87,
-        "new world": 4.19
-    },
-    "apples": {
-        "countdown": 7.99,
-        "pak n save": 8.29,
-        "new world": 8.79
-    }
-}
+prices = {}
 
 # ____________   MAIN  ________________
 # Creating a custom window
@@ -134,11 +118,28 @@ lb_heading = tk.Label(window,
 lb_heading.pack(pady=20)
 
 # Labels for store and product entry fields
+lb_product = tk.Label(window,
+                      text="Enter product name (e.g. Milk):",
+                      font=("Comic Sans", 14),
+                      fg="black",
+                      bg="#a7f2cd")
+e_product = tk.Entry(window, font=("Comic Sans", 14))
+
+# Pack the store and product labels
+
+lb_product.pack(pady=10)
+
+# Pack the store and product entry fields
+#e_store.pack(pady=5)
+e_product.pack(pady=5)
+
+# Labels for store and product entry fields
 lb_store = tk.Label(window,
-                    text="Select store name:",
+                    text="Select a store:",
                     font=("Comic Sans", 14),
                     fg="black",
-                    bg="#F7DC6F")
+                    bg="#a7f2cd")
+lb_store.pack(pady=10)
 
 store_options = ["Countdown", "New World", "Pak N Save"]
 selected_store = tk.StringVar()
@@ -147,20 +148,27 @@ selected_store.set(store_options[0])
 e_store = tk.OptionMenu(window, selected_store, *store_options)
 e_store.config(font=("Comic Sans", 14))
 
-lb_product = tk.Label(window,
-                      text="Enter product name (e.g. Milk):",
-                      font=("Comic Sans", 14),
-                      fg="black",
-                      bg="#F7DC6F")
-e_product = tk.Entry(window, font=("Comic Sans", 14))
-
-# Pack the store and product labels
-lb_store.pack(pady=10)
-lb_product.pack(pady=10)
-
-# Pack the store and product entry fields
+# Pack the store label and dropdown
+lb_store.pack()
 e_store.pack(pady=5)
-e_product.pack(pady=5)
+
+# price
+lb_price = tk.Label(window,
+                    text="Enter price:",
+                    font=("Comic Sans", 14),
+                    fg="black",
+                    bg="#a7f2cd")
+e_price = tk.Entry(window, font=("Comic Sans", 14))
+lb_price.pack(pady=10)
+e_price.pack(pady=5)
+
+btn_add = tk.Button(window,
+                    text="Add Item",
+                    font=("Comic Sans", 14),
+                    bg="#5DADE2",
+                    fg="white",
+                    command=add_item)
+btn_add.pack(pady=10)
 
 # Button to compare prices
 btn_compare = tk.Button(window,
